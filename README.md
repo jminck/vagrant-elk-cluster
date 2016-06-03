@@ -301,6 +301,9 @@ Next go to Kibana Dashboard at [http://localhost:5601/](http://localhost:5601/).
 --
 
 - Launch Kibana [**http://localhost:5601/**](http://localhost:5601/)
+- If things are working as expected, logs from /var/log on all machines in the environment should be forwarding via filebeat to logstash over tcp 5510, and they should be output into elasticsearch, so you should immediately see events in Kibana
+
+**If you don't have data in Kibana**
 - go to settings and create an index pattern (take defaults and just ckick "create" button)
 - review elasticsearch basic health if Kibana isn't loading
  - `curl -XGET http://localhost:9200/_cluster/health?pretty`
