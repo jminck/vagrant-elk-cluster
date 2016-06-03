@@ -24,6 +24,9 @@ vagrant up --no-parallel --provider <virtualbox|parallels|vmware_fusion|vmware_w
 | Kibana | 4.5.1 | [Reference Guide](https://www.elastic.co/guide/en/kibana/current/index.html)|
 | LogStash | 2.3.2 | [Reference Guide](https://www.elastic.co/guide/en/logstash/current/index.html)|
 
+Get the specific versions used by this project here https://onedrive.live.com/redir?resid=5E20D824068F133E!114544&authkey=!ABfvuixNe27T0xA&ithint=folder%2cgz
+
+
 **Cluster Details**
 
 _Default Cluster Name_ : **es-dev-cluster**
