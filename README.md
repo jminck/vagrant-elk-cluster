@@ -43,7 +43,7 @@ _Kibana Endpoint URL_ : [**http://localhost:5601/**](http://localhost:5601/) (_f
 
 _Logstash Syslog Ports_ : **localhost:5514 (Both TCP and UDP)** (_from Host Machine_)
 
-_Logstash Filebeat Port_ : ** 5000 (TCP)** ( Port used by Logstash to listen for Filebeat log forwards)
+_Logstash Filebeat Port_ : ** 5510 (TCP)** ( Port used by Logstash to listen for Filebeat log forwards)
 
 _Cluster Nodes :_
 
