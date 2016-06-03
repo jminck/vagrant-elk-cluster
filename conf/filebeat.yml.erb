@@ -1,0 +1,20 @@
+filebeat:
+  prospectors:
+    -
+      paths:
+        - "/var/log/*.log"
+
+      # Type of the files. Based on this the way the file is read is decided.
+      # The different types cannot be mixed in one prospector
+      #
+      # Possible options are:
+      # * log: Reads every line of the log file (default)
+      # * stdin: Reads the standard in
+      input_type: log
+
+output:
+  logstash:
+    hosts: ["<%= @logstash_ip.strip %>:5510"]
+
+    # Optional load balance the events between the Logstash hosts
+    #loadbalance: true

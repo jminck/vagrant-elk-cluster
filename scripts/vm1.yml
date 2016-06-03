@@ -1,0 +1,15 @@
+#!/bin/bash
+
+INSTANCE=$(screen -li | grep filebeat | sed 's/\s/ /g')
+
+if [ -n "$INSTANCE" ]
+then
+    echo "Already running: $INSTANCE"
+else
+    mkdir -p /vagrant/logs
+
+    screen -S filebeat -d -m bash -l -c "su - vagrant -c \"LS_JAVA_OPTS='-Djava.net.preferIPv4Stack=true' filebeat -c /vagrant/conf/filebeat-vm1.yml > /vagrant/logs/filebeat-vm1.log 2>&1\""
+    echo "-----------------------------------------------------------------------------------------------------------"
+    echo " => Started $VM_NAME - $VM_NODE_NAME - $VM_NODE_IP: $(screen -li | grep filebeat | sed 's/\s/ /g')"
+    echo "-----------------------------------------------------------------------------------------------------------"
+fi

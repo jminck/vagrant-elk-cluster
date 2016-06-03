@@ -1,0 +1,4 @@
+need to correct marvel version in upgrade script
+fixed elasticsearch url in ./conf/kibana.yml manually
+kibana wont start automatically
+

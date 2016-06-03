@@ -1,0 +1,7 @@
+.vagrant/
+conf/*.yml
+conf/*.conf
+logs/
+data/
+*.rpm
+*.gz
