@@ -297,6 +297,21 @@ Next go to Kibana Dashboard at [http://localhost:5601/](http://localhost:5601/).
 
 ---
 
+6. Validation of first time setup
+--
+
+- Launch Kibana [**http://localhost:5601/**](http://localhost:5601/)
+- go to settings and create an index pattern (take defaults and just ckick "create" button)
+- review elasticsearch basic health if Kibana isn't loading
+ - `curl -XGET http://localhost:9200/_cluster/health?pretty`
+   - Status should be GREEN  
+ - `curl -XGET http://localhost:9200/_cat/shards`
+   - There should be no unassigned shards 
+    - if .kibana shards are unassigned run `curl -XDELETE http://localhost:9200/.kibana` and then restart kibana machine with `vagrant reload kibana`
+
+
+
+
 **TODO**
 
 See issues.
