@@ -74,6 +74,7 @@ _Cluster Nodes :_
 |[elasticsearch-HQ](https://github.com/royrusso/elasticsearch-HQ) | latest| [http://localhost:9200/\_plugin/HQ/](http://localhost:9200/_plugin/HQ/)<br/>__NOT WORKING IN ES 2.0__|
 |[bigdesk](https://github.com/lukas-vlcek/bigdesk)|latest|[http://localhost:9200/\_plugin/bigdesk](http://localhost:9200/_plugin/bigdesk)<br/>__NOT WORKING IN ES 2.0__ |
 |[Sense](https://www.elastic.co/guide/en/sense/current/index.html)|2.0.0|[http://localhost:5601/app/sense](http://localhost:5601/app/sense)|
+|[Marvel](https://www.elastic.co/guide/en/marvel/current/index.html)|2.3|[http://localhost:5601/app/marvel](http://localhost:5601/app/marvel)|
 
 <br/>
 
