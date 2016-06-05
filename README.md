@@ -1,7 +1,7 @@
 Vagrant ELK (Elasticsearch + Logstash (+ Filebeat) + Kibana) Cluster
 =============================
 
-Forked from https://github.com/bhaskarvk/vagrant-elk-cluster
+Forked from https://github.com/bhaskarvk/vagrant-elk-cluster<br />
 Updated versions of products and added Filebeat forwarding
 
 Create an ELK Stack with a single bash command in Vmware, Parallels, or VirtualBox :
@@ -82,7 +82,7 @@ _Cluster Nodes :_
 
 
 
-1. Pre Requisite & Set up
+1. Prerequisite & Set up
 --
 
 **Must have on your host machine**
@@ -94,7 +94,7 @@ _Cluster Nodes :_
 
 **Clone this repository**
 
-`git clone https://github.com/bhaskarvk/vagrant-elk-cluster.git`
+`git clone https://github.com/jminck/vagrant-elk-cluster.git`
 
 **Download Installation Files**
 
