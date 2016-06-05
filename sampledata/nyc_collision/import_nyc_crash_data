@@ -1,0 +1,2 @@
+wget https://data.cityofnewyork.us/api/views/h9gi-nx95/rows.csv?accessType=DOWNLOAD -O nyc_collision_data.csv
+cat nyc_collision_data.csv | /home/vagrant/logstash/bin/logstash -f nyc_collision_logstash.conf --verbose
