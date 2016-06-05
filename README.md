@@ -319,7 +319,7 @@ Next go to Kibana Dashboard at [http://localhost:5601/](http://localhost:5601/).
 - the best way to restart ANY of the machines is by using `vagrant reload` so that things are started and the folder redirection that mounts /vagrant within the VM to the root of the folder you're running in on the host
 
 
-6. Import a sample dataset and visualize it
+7. Import a sample dataset and visualize it
 --
 In the sampledata/nyc_collision folder, there are some files taken from: 
 https://github.com/elastic/examples/tree/master/ELK_nyc_traffic_accidents
