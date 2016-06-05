@@ -321,8 +321,8 @@ Next go to Kibana Dashboard at [http://localhost:5601/](http://localhost:5601/).
 7. Import a sample dataset and visualize it
 --
 In the sampledata/nyc_collision folder, there are some files taken from: 
-https://github.com/elastic/examples/tree/master/ELK_nyc_traffic_accidents
-For more information about this section, see the source repo's [README here](https://github.com/elastic/examples/blob/master/ELK_nyc_traffic_accidents/README.md)
+https://github.com/elastic/examples/tree/master/ELK_nyc_traffic_accidents.<br />
+For more information about this section, see the source repo's README [ here](https://github.com/elastic/examples/blob/master/ELK_nyc_traffic_accidents/README.md).
 
 1) Import data with logstash
 
