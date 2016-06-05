@@ -314,9 +314,8 @@ Next go to Kibana Dashboard at [http://localhost:5601/](http://localhost:5601/).
     - More tricks in [cat api] (https://www.elastic.co/guide/en/elasticsearch/reference/current/cat.html)
 
 **Other useful things to know**
-- /vagrant/scripts contains start, stop, restart scripts for kibana, logstash, filebeat and elasticsearch, use these to start/stop services because this is how Vagrant does it (and it uses the screen utility to launch processes in the background)
-- kibana doesn't start automatically after a reboot, its not setup as a service, but will start if you follow the step below
-- the best way to restart ANY of the machines is by using `vagrant reload` so that things are started and the folder redirection that mounts /vagrant within the VM to the root of the folder you're running in on the host
+- /vagrant/scripts contains start, stop, restart scripts for kibana, logstash, filebeat and elasticsearch, use these to start/stop services because this is how Vagrant does it (and it uses the screen utility to launch processes in the background).
+- the proper way to restart ANY of the machines is by using `vagrant reload` so that things are started and the folder redirection that mounts /vagrant within the VM to the root of the folder you're running in on the host.
 
 
 7. Import a sample dataset and visualize it
