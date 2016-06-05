@@ -314,12 +314,43 @@ Next go to Kibana Dashboard at [http://localhost:5601/](http://localhost:5601/).
     - More tricks in [cat api] (https://www.elastic.co/guide/en/elasticsearch/reference/current/cat.html)
 
 **Other useful things to know**
-- /vagrant/scripts contains start, stop, restart scripts for kibana, logstash, filebeat and elasticsearch, use these to start/stop services because this is how Vagrant does it (and it uses the screen utility to launch processes in the background)
-- kibana doesn't start automatically after a reboot, its not setup as a service, but will start if you follow the step below
-- the best way to restart ANY of the machines is by using `vagrant reload` so that things are started and the folder redirection that mounts /vagrant within the VM to the root of the folder you're running in on the host
+- /vagrant/scripts contains start, stop, restart scripts for kibana, logstash, filebeat and elasticsearch, use these to start/stop services because this is how Vagrant does it (and it uses the screen utility to launch processes in the background).
+- the proper way to restart ANY of the machines is by using `vagrant reload` so that things are started and the folder redirection that mounts /vagrant within the VM to the root of the folder you're running in on the host.
 
 
+7. Import a sample dataset and visualize it
+--
+In the sampledata/nyc_collision folder, there are some files taken from: 
+https://github.com/elastic/examples/tree/master/ELK_nyc_traffic_accidents.<br />
+For more information about this section, see the source repo's README [ here](https://github.com/elastic/examples/blob/master/ELK_nyc_traffic_accidents/README.md).
 
+1) Import data with logstash
+
+* Run the script `import_nyc_crash_data` from the logstash vm.
+
+  run `vagrant ssh logstash`
+  
+  once logged into the logstash vm run the following:
+  
+  `cd /vagrant/sampledata/nyc_collision` <br />
+  `./import_nyc_crash_data`
+  
+
+* This will download  nyc_collision_data.csv from [NYC Open Data Portal](https://data.cityofnewyork.us/Public-Safety/NYPD-Motor-Vehicle-Collisions/h9gi-nx95?).
+* it will also import the CSV into elasticsearch. Only the file nyc_collision_logstash.conf has been modified, it points to http://10.1.1.11:9200 (vm1) instead of localhost in its output stanza.
+
+2)  Visualize data in Kibana
+
+* Access Kibana by going to `http://localhost:5601` in a web browser from your host machine
+* Connect Kibana to the `nyc_visionzero` index in Elasticsearch (autocreated in step 1)
+    * Click the **Settings** tab >> **Indices** tab >> **Create New**. Specify `nyc_visionzero` as the index pattern name and click **Create** to define the index pattern. (Leave the **Use event times to create index names** box unchecked)
+* Load sample dashboard into Kibana
+    * Click the **Settings** tab >> **Objects** tab >> **Import**, and select `nyc_collision_kibana.json`
+* Open dashboard
+    * Click on **Dashboard** tab and open `NYC Motor Vehicles Collision` dashboard
+
+Voila! You should see the following dashboard. Happy Data Exploration!
+![Kibana Dashboard Screenshot](https://cloud.githubusercontent.com/assets/5269751/10008565/f548dc28-6084-11e5-9956-b29c2ca043ee.png)
 
 **TODO**
 
