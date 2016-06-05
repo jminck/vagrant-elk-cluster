@@ -327,6 +327,15 @@ For more information about this section, see the source repo's README [ here](ht
 1) Import data with logstash
 
 * Run the script `import_nyc_crash_data` from the logstash vm.
+
+  run `vagrant ssh logstash`
+  
+  once logged into the logstash vm run the following:
+  
+  `cd /vagrant/sampledata/nyc_collision` <br />
+  `./import_nyc_crash_data`
+  
+
 * This will download  nyc_collision_data.csv from [NYC Open Data Portal](https://data.cityofnewyork.us/Public-Safety/NYPD-Motor-Vehicle-Collisions/h9gi-nx95?).
 * it will also import the CSV into elasticsearch. Only the file nyc_collision_logstash.conf has been modified, it points to http://10.1.1.11:9200 (vm1) instead of localhost in its output stanza.
 
