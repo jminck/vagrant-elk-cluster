@@ -297,6 +297,30 @@ Next go to Kibana Dashboard at [http://localhost:5601/](http://localhost:5601/).
 
 ---
 
+6. Validation of first time setup
+--
+
+- Launch Kibana [**http://localhost:5601/**](http://localhost:5601/)
+- If things are working as expected, logs from /var/log on all machines in the environment should be forwarding via filebeat to logstash over tcp 5510, and they should be output into elasticsearch, so you should immediately see events in Kibana
+
+**If you don't see data in Kibana**
+- go to settings and create an index pattern (take defaults and just ckick "create" button)
+- review elasticsearch basic health if Kibana isn't loading
+ - `curl -XGET http://localhost:9200/_cluster/health?pretty`
+   - Status should be GREEN  
+ - `curl -XGET http://localhost:9200/_cat/shards`
+   - There should be no unassigned shards 
+    - if .kibana shards are unassigned run `curl -XDELETE http://localhost:9200/.kibana` and then restart kibana machine with `vagrant reload kibana`
+    - More tricks in [cat api] (https://www.elastic.co/guide/en/elasticsearch/reference/current/cat.html)
+
+**Other useful things to know**
+- /vagrant/scripts contains start, stop, restart scripts for kibana, logstash, filebeat and elasticsearch, use these to start/stop services because this is how Vagrant does it (and it uses the screen utility to launch processes in the background)
+- kibana doesn't start automatically after a reboot, its not setup as a service, but will start if you follow the step below
+- the best way to restart ANY of the machines is by using `vagrant reload` so that things are started and the folder redirection that mounts /vagrant within the VM to the root of the folder you're running in on the host
+
+
+
+
 **TODO**
 
 See issues.
