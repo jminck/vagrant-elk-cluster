@@ -3,6 +3,7 @@ filebeat:
     -
       paths:
         - "/var/log/*.log"
+        - "/vagrant/logs/*.log"
 
       # Type of the files. Based on this the way the file is read is decided.
       # The different types cannot be mixed in one prospector

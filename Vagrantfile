@@ -52,6 +52,7 @@ Vagrant.configure("2") do |config|
         end
     end
 
+
     # ES Nodes
     (1..nodes_number).each do |index|
         name = utils.get_vm_name index
@@ -83,6 +84,36 @@ Vagrant.configure("2") do |config|
                 node.vm.provider vmware do |v|
                     v.vmx["displayname"] =  "elasticsearch-#{name}"
                 end
+            end
+        end
+    end
+
+    # logstash
+    config.vm.define :"logstash" do |node|
+        name = utils.get_logstash_vm_name
+        node_name = utils.get_logstash_node_name
+        ip = utils.get_logstash_vm_ip
+        utils.build_logstash_config
+        utils.build_filebeat_config name
+        node.vm.hostname = "#{node_name}.es.dev"
+        node.vm.network 'private_network', ip: ip, auto_config: true
+        node.vm.provision 'shell', path: './lib/upgrade-logstash.sh'
+        node.vm.provision 'shell', inline: @logstash_start_inline_script % [name, node_name, ip],
+            run: 'always'
+        node.vm.provision 'shell', path: './lib/upgrade-filebeat.sh'
+        node.vm.provision 'shell', inline: @filebeat_start_inline_script % [name, node_name, ip],
+            run: 'always'
+        node.vm.network "forwarded_port", guest: 5514, host: 5514, protocol: 'tcp'
+        node.vm.network "forwarded_port", guest: 5514, host: 5514, protocol: 'udp'
+        node.vm.provider "parallels" do |v|
+            v.name = "elasticsearch-#{name}"
+        end
+        node.vm.provider "virtualbox" do |v|
+            v.name = "elasticsearch-#{name}"
+        end
+        ["vmware_fusion", "vmware_workstation"].each do |vmware|
+            node.vm.provider vmware do |v|
+                v.vmx["displayname"] =  "elasticsearch-#{name}"
             end
         end
     end
@@ -121,34 +152,6 @@ Vagrant.configure("2") do |config|
         end
     end
 
-    # logstash
-    config.vm.define :"logstash" do |node|
-        name = utils.get_logstash_vm_name
-        node_name = utils.get_logstash_node_name
-        ip = utils.get_logstash_vm_ip
-        utils.build_logstash_config
-        utils.build_filebeat_config name
-        node.vm.hostname = "#{node_name}.es.dev"
-        node.vm.network 'private_network', ip: ip, auto_config: true
-        node.vm.provision 'shell', path: './lib/upgrade-logstash.sh'
-        node.vm.provision 'shell', inline: @logstash_start_inline_script % [name, node_name, ip],
-            run: 'always'
-        node.vm.provision 'shell', path: './lib/upgrade-filebeat.sh'
-        node.vm.provision 'shell', inline: @filebeat_start_inline_script % [name, node_name, ip],
-            run: 'always'
-        node.vm.network "forwarded_port", guest: 5514, host: 5514, protocol: 'tcp'
-        node.vm.network "forwarded_port", guest: 5514, host: 5514, protocol: 'udp'
-        node.vm.provider "parallels" do |v|
-            v.name = "elasticsearch-#{name}"
-        end
-        node.vm.provider "virtualbox" do |v|
-            v.name = "elasticsearch-#{name}"
-        end
-        ["vmware_fusion", "vmware_workstation"].each do |vmware|
-            node.vm.provider vmware do |v|
-                v.vmx["displayname"] =  "elasticsearch-#{name}"
-            end
-        end
-    end
+
     utils.logger.info "----------------------------------------------------------"
 end

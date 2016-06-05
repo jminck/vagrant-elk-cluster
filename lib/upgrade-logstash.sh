@@ -27,6 +27,8 @@ chown -R vagrant: logstash
 
 firewall-cmd --zone=public --add-port=5514/tcp --permanent
 firewall-cmd --zone=public --add-port=5514/udp --permanent
-firewall-cmd --zone=public --add-port=5510/udp --permanen
+firewall-cmd --zone=public --add-port=5510/udp --permanent
+
+# workaround - need to fix this but interface used isn't being assigned a zone
 systemctl stop firewalld
-systemctl start firewalld
+systemctl disable firewalld
