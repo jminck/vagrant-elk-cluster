@@ -103,6 +103,7 @@ This needs to be done just once.
 *	Download elasticsearch-2.1.0.tar.gz from [elastic](https://www.elastic.co/downloads/elasticsearch)
 *	Download kibana-4.3.0-linux-x64.tar.gz from [elastic](https://www.elastic.co/downloads/kibana)
 *	Download logstash-2.1.0.tar.gz from [elastic](https://www.elastic.co/downloads/logstash)
+*	Be lazy and get correct versions of all requirements used by this project from my archive [here] (https://goo.gl/h7jpEs) 
 *	Place all the above files at the root of this repo.
 
 Optional - update grok patterns for logstash
