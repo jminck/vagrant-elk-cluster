@@ -24,7 +24,7 @@ vagrant up --no-parallel --provider <virtualbox|parallels|vmware_fusion|vmware_w
 | Kibana | 4.5.1 | [Reference Guide](https://www.elastic.co/guide/en/kibana/current/index.html)|
 | LogStash | 2.3.2 | [Reference Guide](https://www.elastic.co/guide/en/logstash/current/index.html)|
 
-Get the specific versions used by this project here https://goo.gl/h7jpEs
+Get all requirements used by this project from my archive [here] (https://goo.gl/h7jpEs)
 
 
 **Cluster Details**
