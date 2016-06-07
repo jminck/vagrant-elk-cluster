@@ -317,6 +317,11 @@ Next go to Kibana Dashboard at [http://localhost:5601/](http://localhost:5601/).
 - /vagrant/scripts contains start, stop, restart scripts for kibana, logstash, filebeat and elasticsearch, use these to start/stop services because this is how Vagrant does it (and it uses the screen utility to launch processes in the background).
 - the proper way to restart ANY of the machines is by using `vagrant reload` so that things are started and the folder redirection that mounts /vagrant within the VM to the root of the folder you're running in on the host.
 
+**More Useful URLs**<br />
+- [http://localhost:9200/_cluster/state?pretty=true](http://localhost:9200/_cluster/state?pretty=true)
+- [http://localhost:9200/_cluster/health?pretty](http://localhost:9200/_cluster/health?pretty)
+- [http://localhost:9200/_shard_stores?status=green](http://localhost:9200/_shard_stores?status=green)
+- [http://localhost:9200/_cat/shards](http://localhost:9200/_cat/shards)
 
 7. Import a sample dataset and visualize it
 --
