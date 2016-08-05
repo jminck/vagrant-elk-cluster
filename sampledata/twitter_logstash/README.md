@@ -8,7 +8,7 @@ Update logstash configuration in the logstash VM with the sample data in logstas
     vagrant ssh logstash
     vi /vagrant/conf/logstash-vm251.conf
  ```
- - <copy sample data into .conf file>
+ - copy sample data into .conf file
  - exit ssh connection
  - restart logstash machine 
 ```sh
