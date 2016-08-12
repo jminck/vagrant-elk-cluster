@@ -16,8 +16,8 @@ module Vagrant
                     'cluster_name' => ['CLUSTER_NAME', 'cluster_name', 'dev-es-cluster'],
                     'cluster_ip' => ['CLUSTER_IP_PATTERN', 'cluster_ip', '10.1.1.%d'],
                     'cluster_count' => ['CLUSTER_COUNT', 'cluster_count', 3],
-                    'cluster_ram' => ['CLUSTER_RAM', 'cluster_ram', 1024],
-                    'cluster_cpu' => ['CLUSTER_CPU', 'cluster_cpu', 1],
+                    'cluster_ram' => ['CLUSTER_RAM', 'cluster_ram', 4096],
+                    'cluster_cpu' => ['CLUSTER_CPU', 'cluster_cpu', 2],
                 ]
 
                 @names = %w(thor zeus isis shifu baal)
