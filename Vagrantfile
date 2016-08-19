@@ -6,6 +6,8 @@ require_relative 'lib/elasticsearch-script.rb'
 require_relative 'lib/kibana-script.rb'
 require_relative 'lib/logstash-script.rb'
 require_relative 'lib/filebeat-script.rb'
+require_relative 'lib/topbeat-script.rb'
+require_relative 'lib/metricbeat-script.rb'
 
 utils = Vagrant::ElastiSearchCluster::Util.new
 
@@ -24,6 +26,7 @@ Vagrant.configure("2") do |config|
 
     #config.vm.box = 'chef/centos-7.1'
     config.vm.box = 'bhaskarvk/centos7-x86_64'
+    config.ssh.insert_key = false
 
     # Virtualbox
     config.vm.provider 'virtualbox' do |vbox, override|
@@ -62,6 +65,8 @@ Vagrant.configure("2") do |config|
 
         utils.build_config index
         utils.build_filebeat_config name
+        utils.build_topbeat_config name
+        utils.build_metricbeat_config name
 
         config.vm.define :"#{name}", primary: primary do |node|
             node.vm.hostname = "#{name}.es.dev"
@@ -71,6 +76,12 @@ Vagrant.configure("2") do |config|
                 run: 'always'
             node.vm.provision 'shell', path: './lib/upgrade-filebeat.sh'
             node.vm.provision 'shell', inline: @filebeat_start_inline_script % [name, node_name, ip],
+                run: 'always'
+            node.vm.provision 'shell', path: './lib/upgrade-topbeat.sh'
+            node.vm.provision 'shell', inline: @topbeat_start_inline_script % [name, node_name, ip],
+                run: 'always'
+            node.vm.provision 'shell', path: './lib/upgrade-metricbeat.sh'
+            node.vm.provision 'shell', inline: @metricbeat_start_inline_script % [name, node_name, ip],
                 run: 'always'
             node.vm.network "forwarded_port", guest: 9200, host: 9200+index
             node.vm.network "forwarded_port", guest: 9300, host: 9300+index
@@ -95,6 +106,9 @@ Vagrant.configure("2") do |config|
         ip = utils.get_logstash_vm_ip
         utils.build_logstash_config
         utils.build_filebeat_config name
+        utils.build_topbeat_config name
+        utils.build_metricbeat_config name
+
         node.vm.hostname = "#{node_name}.es.dev"
         node.vm.network 'private_network', ip: ip, auto_config: true
         node.vm.provision 'shell', path: './lib/upgrade-logstash.sh'
@@ -102,6 +116,12 @@ Vagrant.configure("2") do |config|
             run: 'always'
         node.vm.provision 'shell', path: './lib/upgrade-filebeat.sh'
         node.vm.provision 'shell', inline: @filebeat_start_inline_script % [name, node_name, ip],
+        run: 'always'
+        node.vm.provision 'shell', path: './lib/upgrade-topbeat.sh'
+        node.vm.provision 'shell', inline: @topbeat_start_inline_script % [name, node_name, ip],
+            run: 'always'
+        node.vm.provision 'shell', path: './lib/upgrade-metricbeat.sh'
+        node.vm.provision 'shell', inline: @metricbeat_start_inline_script % [name, node_name, ip],
             run: 'always'
         node.vm.network "forwarded_port", guest: 5514, host: 5514, protocol: 'tcp'
         node.vm.network "forwarded_port", guest: 5514, host: 5514, protocol: 'udp'
@@ -125,6 +145,9 @@ Vagrant.configure("2") do |config|
         ip = utils.get_kibana_vm_ip
         utils.build_kibana_config
         utils.build_filebeat_config name
+        utils.build_topbeat_config name
+        utils.build_metricbeat_config name
+
         node.vm.hostname = "#{node_name}.es.dev"
         node.vm.network 'private_network', ip: ip, auto_config: true
         node.vm.provision 'shell', path: './lib/upgrade-es.sh'
@@ -135,6 +158,12 @@ Vagrant.configure("2") do |config|
             run: 'always'
         node.vm.provision 'shell', path: './lib/upgrade-filebeat.sh'
         node.vm.provision 'shell', inline: @filebeat_start_inline_script % [name, node_name, ip],
+            run: 'always'
+        node.vm.provision 'shell', path: './lib/upgrade-topbeat.sh'
+        node.vm.provision 'shell', inline: @topbeat_start_inline_script % [name, node_name, ip],
+            run: 'always'
+        node.vm.provision 'shell', path: './lib/upgrade-metricbeat.sh'
+        node.vm.provision 'shell', inline: @metricbeat_start_inline_script % [name, node_name, ip],
             run: 'always'
         node.vm.network "forwarded_port", guest: 9200, host: 9200
         node.vm.network "forwarded_port", guest: 9300, host: 9300

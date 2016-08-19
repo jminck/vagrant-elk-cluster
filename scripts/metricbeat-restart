@@ -1,0 +1,4 @@
+#!/bin/bash
+
+metricbeat-stop
+metricbeat-start

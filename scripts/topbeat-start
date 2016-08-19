@@ -1,0 +1,15 @@
+#!/bin/bash
+
+INSTANCE=$(screen -li | grep topbeat | sed 's/\s/ /g')
+
+if [ -n "$INSTANCE" ]
+then
+    echo "Already running: $INSTANCE"
+else
+    mkdir -p /vagrant/logs
+
+    screen -S topbeat -d -m bash -l -c "su - vagrant -c \"LS_JAVA_OPTS='-Djava.net.preferIPv4Stack=true' topbeat -c /vagrant/conf/topbeat-$VM_NAME.yml > /vagrant/logs/topbeat-$VM_NAME.log 2>&1\""
+    echo "-----------------------------------------------------------------------------------------------------------"
+    echo " => Started $VM_NAME - $VM_NODE_NAME - $VM_NODE_IP: $(screen -li | grep topbeat | sed 's/\s/ /g')"
+    echo "-----------------------------------------------------------------------------------------------------------"
+fi

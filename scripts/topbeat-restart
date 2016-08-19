@@ -1,0 +1,4 @@
+#!/bin/bash
+
+topbeat-stop
+topbeat-start

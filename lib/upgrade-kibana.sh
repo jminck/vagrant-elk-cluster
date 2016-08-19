@@ -21,8 +21,6 @@ fi
 mv $KIBANA_VERSION kibana
 ${KIBANA_PLUGIN_INSTALL_CMD} elastic/sense
 ${KIBANA_PLUGIN_INSTALL_CMD} elasticsearch/marvel/latest
-${KIBANA_PLUGIN_INSTALL_CMD} tagcloud -u https://github.com/stormpython/tagcloud/archive/master.zip
-
 
 chown -R vagrant: kibana
 

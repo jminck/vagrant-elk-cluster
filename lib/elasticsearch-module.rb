@@ -15,9 +15,9 @@ module Vagrant
                 @params = [
                     'cluster_name' => ['CLUSTER_NAME', 'cluster_name', 'dev-es-cluster'],
                     'cluster_ip' => ['CLUSTER_IP_PATTERN', 'cluster_ip', '10.1.1.%d'],
-                    'cluster_count' => ['CLUSTER_COUNT', 'cluster_count', 3],
+                    'cluster_count' => ['CLUSTER_COUNT', 'cluster_count', 4],
                     'cluster_ram' => ['CLUSTER_RAM', 'cluster_ram', 4096],
-                    'cluster_cpu' => ['CLUSTER_CPU', 'cluster_cpu', 2],
+                    'cluster_cpu' => ['CLUSTER_CPU', 'cluster_cpu', 1],
                 ]
 
                 @names = %w(thor zeus isis shifu baal)
@@ -97,6 +97,17 @@ module Vagrant
                 ERB.new(config_file.read)
             end
 
+            def get_topbeat_config_template
+                conf_dir = get_conf_dir()
+                config_file = File.open("#{conf_dir}/topbeat.yml.erb", 'r')
+                ERB.new(config_file.read)
+            end
+
+            def get_metricbeat_config_template
+                conf_dir = get_conf_dir()
+                config_file = File.open("#{conf_dir}/metricbeat.yml.erb", 'r')
+                ERB.new(config_file.read)
+            end
             def build_config(index)
                 vm = get_vm_name index
                 conf_dir = get_conf_dir()
@@ -158,6 +169,30 @@ module Vagrant
                     @cluster_name = get_cluster_info 'cluster_name'
                     @logger.info "Building configuration for #{name}"
                     file.puts self.get_filebeat_config_template.result(binding)
+                end unless File.exist? conf_file_format
+            end
+
+            def build_topbeat_config(name)
+                conf_dir = get_conf_dir()
+                conf_file_format = "#{conf_dir}/topbeat-#{name}.yml"
+
+                File.open(conf_file_format, 'w') do |file|
+                    @logstash_ip = get_logstash_vm_ip
+                    @cluster_name = get_cluster_info 'cluster_name'
+                    @logger.info "Building topebat configuration for #{name}"
+                    file.puts self.get_topbeat_config_template.result(binding)
+                end unless File.exist? conf_file_format
+            end
+
+            def build_metricbeat_config(name)
+                conf_dir = get_conf_dir()
+                conf_file_format = "#{conf_dir}/metricbeat-#{name}.yml"
+
+                File.open(conf_file_format, 'w') do |file|
+                    @logstash_ip = get_logstash_vm_ip
+                    @cluster_name = get_cluster_info 'cluster_name'
+                    @logger.info "Building metricbeat configuration for #{name}"
+                    file.puts self.get_metricbeat_config_template.result(binding)
                 end unless File.exist? conf_file_format
             end
 
