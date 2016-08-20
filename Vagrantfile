@@ -83,6 +83,9 @@ Vagrant.configure("2") do |config|
             node.vm.provision 'shell', path: './lib/upgrade-metricbeat.sh'
             node.vm.provision 'shell', inline: @metricbeat_start_inline_script % [name, node_name, ip],
                 run: 'always'
+            #This is to workaround unreliable static IP addignment due to BOOTPROTO=none instead of static set by Vagrant
+            node.vm.provision 'shell', inline: "sudo sed -i 's/BOOTPROTO=none/BOOTPROTO=static/g' /etc/sysconfig/network-scripts/ifcfg-*",
+                run: 'always'
             node.vm.network "forwarded_port", guest: 9200, host: 9200+index
             node.vm.network "forwarded_port", guest: 9300, host: 9300+index
             node.vm.provider "parallels" do |v|
@@ -122,6 +125,9 @@ Vagrant.configure("2") do |config|
             run: 'always'
         node.vm.provision 'shell', path: './lib/upgrade-metricbeat.sh'
         node.vm.provision 'shell', inline: @metricbeat_start_inline_script % [name, node_name, ip],
+            run: 'always'
+        #This is to workaround unreliable static IP addignment due to BOOTPROTO=none instead of static set by Vagrant
+        node.vm.provision 'shell', inline: "sudo sed -i 's/BOOTPROTO=none/BOOTPROTO=static/g' /etc/sysconfig/network-scripts/ifcfg-*",
             run: 'always'
         node.vm.network "forwarded_port", guest: 5514, host: 5514, protocol: 'tcp'
         node.vm.network "forwarded_port", guest: 5514, host: 5514, protocol: 'udp'
@@ -164,6 +170,9 @@ Vagrant.configure("2") do |config|
             run: 'always'
         node.vm.provision 'shell', path: './lib/upgrade-metricbeat.sh'
         node.vm.provision 'shell', inline: @metricbeat_start_inline_script % [name, node_name, ip],
+            run: 'always'
+        #This is to workaround unreliable static IP addignment due to BOOTPROTO=none instead of static set by Vagrant
+        node.vm.provision 'shell', inline: "sudo sed -i 's/BOOTPROTO=none/BOOTPROTO=static/g' /etc/sysconfig/network-scripts/ifcfg-*",
             run: 'always'
         node.vm.network "forwarded_port", guest: 9200, host: 9200
         node.vm.network "forwarded_port", guest: 9300, host: 9300

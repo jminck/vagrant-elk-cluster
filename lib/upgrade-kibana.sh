@@ -3,7 +3,7 @@ yum -q -y install screen
 # Setting ES version to install
 KIBANA_VERSION="kibana-4.5.1-linux-x64"
 KIBANA_PLUGIN_INSTALL_CMD="kibana/bin/kibana plugin --install"
-
+BEATS_DASHBOARD_VERSION="beats-dashboards-1.2.3"
 # Removing all previous potentially installed version
 rm -rf kibana
 rm -rf kibana-*
@@ -23,6 +23,16 @@ ${KIBANA_PLUGIN_INSTALL_CMD} elastic/sense
 ${KIBANA_PLUGIN_INSTALL_CMD} elasticsearch/marvel/latest
 
 chown -R vagrant: kibana
+
+#install Beats dashboards
+curl -L -O http://download.elastic.co/beats/dashboards/${BEATS_DASHBOARD_VERSION}.zip
+unzip ${BEATS_DASHBOARD_VERSION}.zip
+cd ${BEATS_DASHBOARD_VERSION}
+./load.sh -url http://10.1.1.11:9200
+
+#install metricbeat dashboard (placed here by metricbeat install, not part of dashboard pack as metricbeat is in Alpha)
+cd /home/vagrant/metricbeat/kibana/
+./import_dashboards.sh  -url http://10.1.1.11:9200
 
 firewall-cmd --zone=public --add-port=9200/tcp --permanent
 firewall-cmd --zone=public --add-port=9300/tcp --permanent

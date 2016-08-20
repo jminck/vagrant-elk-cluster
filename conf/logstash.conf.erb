@@ -1,4 +1,14 @@
 input { 
+  twitter {
+       # add your twitter API key info - these keys are bogus
+            consumer_key => "e9vQUQlo4alwI6ZLdPacIoXBm"
+            consumer_secret => "CkZJuBp49FoAp1XsW4kRUj4D83KhU1HIvi3M240xhLvoeZrAlZ"
+            oauth_token => "1115912828-fxO425NYVlBD63POcrPcAkv2GrXqGamtINhpn1F"
+            oauth_token_secret => "ALIVAj1t4OjdLpqSGsda8DJFMcGZeKXeeetQrU0FAKX3r"
+    keywords => ["#Hillary","#Trump","HillaryClinton"]
+    full_tweet => true
+    type => "twitter"
+    }
   beats {
     port => 5510
     type => beats
@@ -29,8 +39,23 @@ filter {
 
 
 output {
+  if [type] == "twitter" {
     elasticsearch {
-        hosts => [ "<%= @node01_ip.strip %>:9200" ]
+        hosts => [ "<%= @node01_ip.strip %>:9200", "<%= @node02_ip.strip %>:9200", "<%= @node03_ip.strip %>:9200", "<%= @node04_ip.strip %>:9200", "<%= @node05_ip.strip %>:9200" ]
         sniffing => true
-    }
-}
+        index => "twitter-%{+YYYY.MM.dd}"
+        document_type => "tweet"
+        template => "/vagrant/conf/twitter_template.json"
+        template_name => "twitter"
+        }
+  } else {
+    elasticsearch {
+        manage_template => false
+        index => "%{[@metadata][beat]}-%{+YYYY.MM.dd}"
+        document_type => "%{[@metadata][type]}"
+        hosts => [ "<%= @node01_ip.strip %>:9200", "<%= @node02_ip.strip %>:9200", "<%= @node03_ip.strip %>:9200", "<%= @node04_ip.strip %>:9200", "<%= @node05_ip.strip %>:9200" ]
+        sniffing => true
+      }
+  }
+ }
+
