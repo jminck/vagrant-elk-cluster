@@ -88,6 +88,7 @@ Vagrant.configure("2") do |config|
                 run: 'always'
             node.vm.network "forwarded_port", guest: 9200, host: 9200+index
             node.vm.network "forwarded_port", guest: 9300, host: 9300+index
+            node.vm.provision :reload 
             node.vm.provider "parallels" do |v|
                 v.name = "elasticsearch-#{name}"
             end
@@ -107,7 +108,7 @@ Vagrant.configure("2") do |config|
         name = utils.get_logstash_vm_name
         node_name = utils.get_logstash_node_name
         ip = utils.get_logstash_vm_ip
-        utils.build_logstash_config
+        utils.build_logstash_config 
         utils.build_filebeat_config name
         utils.build_topbeat_config name
         utils.build_metricbeat_config name
@@ -119,7 +120,7 @@ Vagrant.configure("2") do |config|
             run: 'always'
         node.vm.provision 'shell', path: './lib/upgrade-filebeat.sh'
         node.vm.provision 'shell', inline: @filebeat_start_inline_script % [name, node_name, ip],
-        run: 'always'
+            run: 'always'
         node.vm.provision 'shell', path: './lib/upgrade-topbeat.sh'
         node.vm.provision 'shell', inline: @topbeat_start_inline_script % [name, node_name, ip],
             run: 'always'
@@ -131,6 +132,7 @@ Vagrant.configure("2") do |config|
             run: 'always'
         node.vm.network "forwarded_port", guest: 5514, host: 5514, protocol: 'tcp'
         node.vm.network "forwarded_port", guest: 5514, host: 5514, protocol: 'udp'
+        node.vm.provision :reload
         node.vm.provider "parallels" do |v|
             v.name = "elasticsearch-#{name}"
         end
@@ -156,12 +158,6 @@ Vagrant.configure("2") do |config|
 
         node.vm.hostname = "#{node_name}.es.dev"
         node.vm.network 'private_network', ip: ip, auto_config: true
-        node.vm.provision 'shell', path: './lib/upgrade-es.sh'
-        node.vm.provision 'shell', path: './lib/upgrade-kibana.sh'
-        node.vm.provision 'shell', inline: @node_start_inline_script % [name, node_name, ip],
-            run: 'always'
-        node.vm.provision 'shell', inline: @kibana_start_inline_script % [name, node_name, ip],
-            run: 'always'
         node.vm.provision 'shell', path: './lib/upgrade-filebeat.sh'
         node.vm.provision 'shell', inline: @filebeat_start_inline_script % [name, node_name, ip],
             run: 'always'
@@ -171,12 +167,16 @@ Vagrant.configure("2") do |config|
         node.vm.provision 'shell', path: './lib/upgrade-metricbeat.sh'
         node.vm.provision 'shell', inline: @metricbeat_start_inline_script % [name, node_name, ip],
             run: 'always'
+        node.vm.provision 'shell', path: './lib/upgrade-kibana.sh'
+        node.vm.provision 'shell', inline: @kibana_start_inline_script % [name, node_name, ip],
+            run: 'always'        
         #This is to workaround unreliable static IP addignment due to BOOTPROTO=none instead of static set by Vagrant
         node.vm.provision 'shell', inline: "sudo sed -i 's/BOOTPROTO=none/BOOTPROTO=static/g' /etc/sysconfig/network-scripts/ifcfg-*",
             run: 'always'
         node.vm.network "forwarded_port", guest: 9200, host: 9200
         node.vm.network "forwarded_port", guest: 9300, host: 9300
         node.vm.network "forwarded_port", guest: 5601, host: 5601
+        node.vm.provision :reload
         node.vm.provider "parallels" do |v|
             v.name = "elasticsearch-#{name}"
         end

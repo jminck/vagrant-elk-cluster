@@ -31,6 +31,7 @@ cd ${BEATS_DASHBOARD_VERSION}
 ./load.sh -url http://10.1.1.11:9200
 
 #install metricbeat dashboard (placed here by metricbeat install, not part of dashboard pack as metricbeat is in Alpha)
+find /home/vagrant/ > folderlist.txt
 cd /home/vagrant/metricbeat/kibana/
 ./import_dashboards.sh  -url http://10.1.1.11:9200
 

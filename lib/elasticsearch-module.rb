@@ -116,6 +116,10 @@ module Vagrant
                 File.open(conf_file_format, 'w') do |file|
                     @vm_name = vm
                     @node01_ip = get_vm_ip 1
+                    @node02_ip = get_vm_ip 2
+                    @node03_ip = get_vm_ip 3
+                    @node04_ip = get_vm_ip 4
+                    @node05_ip = get_vm_ip 5
                     @node_ip = get_vm_ip index
                     @node_name = get_node_name index
                     @node_master = true
@@ -154,6 +158,10 @@ module Vagrant
 
                 File.open(conf_file_format, 'w') do |file|
                     @node01_ip = get_vm_ip 1
+                    @node02_ip = get_vm_ip 2
+                    @node03_ip = get_vm_ip 3
+                    @node04_ip = get_vm_ip 4
+                    @node05_ip = get_vm_ip 5
                     @cluster_name = get_cluster_info 'cluster_name'
                     @logger.info "Building configuration for #{vm}"
                     file.puts self.get_logstash_config_template.result(binding)
