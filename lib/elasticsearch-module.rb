@@ -108,6 +108,13 @@ module Vagrant
                 config_file = File.open("#{conf_dir}/metricbeat.yml.erb", 'r')
                 ERB.new(config_file.read)
             end
+            
+            def get_packetbeat_config_template
+                conf_dir = get_conf_dir()
+                config_file = File.open("#{conf_dir}/packetbeat.yml.erb", 'r')
+                ERB.new(config_file.read)
+            end
+                        
             def build_config(index)
                 vm = get_vm_name index
                 conf_dir = get_conf_dir()
