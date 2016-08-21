@@ -8,6 +8,7 @@ require_relative 'lib/logstash-script.rb'
 require_relative 'lib/filebeat-script.rb'
 require_relative 'lib/topbeat-script.rb'
 require_relative 'lib/metricbeat-script.rb'
+require_relative 'lib/packetbeat-script.rb'
 
 utils = Vagrant::ElastiSearchCluster::Util.new
 
@@ -67,6 +68,7 @@ Vagrant.configure("2") do |config|
         utils.build_filebeat_config name
         utils.build_topbeat_config name
         utils.build_metricbeat_config name
+        utils.build_packetbeat_config name
 
         config.vm.define :"#{name}", primary: primary do |node|
             node.vm.hostname = "#{name}.es.dev"

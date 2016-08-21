@@ -6,4 +6,5 @@ data/
 *.rpm
 *.gz
 sampledata/nyc_collision/*.csv
+nothup.out
 hosts
