@@ -127,7 +127,7 @@ module Vagrant
                     @cluster_ip = get_cluster_info 'cluster_ip'
                     @cluster_name = get_cluster_info 'cluster_name'
 
-                    @logger.info "Building configuration for #{vm}"
+                    @logger.info "Building elasticsearch configuration for #{vm}"
                     file.puts self.get_config_template.result(binding)
                 end unless File.exist? conf_file_format
             end
@@ -146,7 +146,7 @@ module Vagrant
                     @cluster_ip = get_cluster_info 'cluster_ip'
                     @cluster_name = get_cluster_info 'cluster_name'
 
-                    @logger.info "Building configuration for #{vm}"
+                    @logger.info "Building elasticsearch configuration for Kibana node #{vm}"
                     file.puts self.get_config_template.result(binding)
                 end unless File.exist? conf_file_format
             end
@@ -163,7 +163,7 @@ module Vagrant
                     @node04_ip = get_vm_ip 4
                     @node05_ip = get_vm_ip 5
                     @cluster_name = get_cluster_info 'cluster_name'
-                    @logger.info "Building configuration for #{vm}"
+                    @logger.info "Building logstash configuration for #{vm}"
                     file.puts self.get_logstash_config_template.result(binding)
                 end unless File.exist? conf_file_format
             end
@@ -175,7 +175,7 @@ module Vagrant
                 File.open(conf_file_format, 'w') do |file|
                     @logstash_ip = get_logstash_vm_ip
                     @cluster_name = get_cluster_info 'cluster_name'
-                    @logger.info "Building configuration for #{name}"
+                    @logger.info "Building filebeat configuration for #{name}"
                     file.puts self.get_filebeat_config_template.result(binding)
                 end unless File.exist? conf_file_format
             end
@@ -201,6 +201,18 @@ module Vagrant
                     @cluster_name = get_cluster_info 'cluster_name'
                     @logger.info "Building metricbeat configuration for #{name}"
                     file.puts self.get_metricbeat_config_template.result(binding)
+                end unless File.exist? conf_file_format
+            end
+
+            def build_packetbeat_config(name)
+                conf_dir = get_conf_dir()
+                conf_file_format = "#{conf_dir}/packetbeat-#{name}.yml"
+
+                File.open(conf_file_format, 'w') do |file|
+                    @logstash_ip = get_logstash_vm_ip
+                    @cluster_name = get_cluster_info 'cluster_name'
+                    @logger.info "Building packetbeat configuration for #{name}"
+                    file.puts self.get_packetbeat_config_template.result(binding)
                 end unless File.exist? conf_file_format
             end
 
