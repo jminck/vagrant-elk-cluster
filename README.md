@@ -93,6 +93,9 @@ _Cluster Nodes :_
 * Respective vagrant plugins for vmware or parallels
 * cUrl (or another REST client to talk to ES)
 
+***Enable Vagrant reload provisioner plugin***  
+`vagrant plugin install vagrant-reload`
+
 **Clone this repository**
 
 `git clone https://github.com/jminck/vagrant-elk-cluster.git`
