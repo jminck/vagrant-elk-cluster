@@ -80,6 +80,9 @@ Vagrant.configure("2") do |config|
             node.vm.provision 'shell', path: './lib/upgrade-topbeat.sh'
             node.vm.provision 'shell', inline: @topbeat_start_inline_script % [name, node_name, ip],
                 run: 'always'
+            node.vm.provision 'shell', path: './lib/upgrade-packetbeat.sh'
+            node.vm.provision 'shell', inline: @packetbeat_start_inline_script % [name, node_name, ip],
+                run: 'always'
             node.vm.provision 'shell', path: './lib/upgrade-metricbeat.sh'
             node.vm.provision 'shell', inline: @metricbeat_start_inline_script % [name, node_name, ip],
                 run: 'always'
@@ -124,6 +127,9 @@ Vagrant.configure("2") do |config|
         node.vm.provision 'shell', path: './lib/upgrade-topbeat.sh'
         node.vm.provision 'shell', inline: @topbeat_start_inline_script % [name, node_name, ip],
             run: 'always'
+        node.vm.provision 'shell', path: './lib/upgrade-packetbeat.sh'
+        node.vm.provision 'shell', inline: @packetbeat_start_inline_script % [name, node_name, ip],
+            run: 'always'
         node.vm.provision 'shell', path: './lib/upgrade-metricbeat.sh'
         node.vm.provision 'shell', inline: @metricbeat_start_inline_script % [name, node_name, ip],
             run: 'always'
@@ -166,6 +172,9 @@ Vagrant.configure("2") do |config|
             run: 'always'
         node.vm.provision 'shell', path: './lib/upgrade-metricbeat.sh'
         node.vm.provision 'shell', inline: @metricbeat_start_inline_script % [name, node_name, ip],
+            run: 'always'
+        node.vm.provision 'shell', path: './lib/upgrade-packetbeat.sh'
+        node.vm.provision 'shell', inline: @packetbeat_start_inline_script % [name, node_name, ip],
             run: 'always'
         node.vm.provision 'shell', path: './lib/upgrade-es.sh'
         node.vm.provision 'shell', inline: @node_start_inline_script % [name, node_name, ip],
