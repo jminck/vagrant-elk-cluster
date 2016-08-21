@@ -23,6 +23,8 @@ vagrant up --no-parallel --provider <virtualbox|parallels|vmware_fusion|vmware_w
 | ElasticSearch                     | 2.3.3       | [Reference Guide](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html) / [Definitive Guide](https://www.elastic.co/guide/en/elasticsearch/guide/current/index.html) |
 | Kibana | 4.5.1 | [Reference Guide](https://www.elastic.co/guide/en/kibana/current/index.html)|
 | LogStash | 2.3.2 | [Reference Guide](https://www.elastic.co/guide/en/logstash/current/index.html)|
+| Beats | 1.2.3 | [Reference Guide](https://www.elastic.co/guide/index.html)|
+
 | All software requirements | ALL | Get same version of all requirements used by this project from my archive [here] (https://goo.gl/h7jpEs) |
 
 
@@ -103,6 +105,10 @@ This needs to be done just once.
 *	Download elasticsearch-2.1.0.tar.gz from [elastic](https://www.elastic.co/downloads/elasticsearch)
 *	Download kibana-4.3.0-linux-x64.tar.gz from [elastic](https://www.elastic.co/downloads/kibana)
 *	Download logstash-2.1.0.tar.gz from [elastic](https://www.elastic.co/downloads/logstash)
+*	Download packetbeat-1.2.3-x86_64.tar.gz from [elastic](https://download.elastic.co/beats/packetbeat/packetbeat-1.2.3-x86_64.tar.gz)
+*	Download filebeat-1.2.3-x86_64.tar.gz from [elastic](https://download.elastic.co/beats/filebeat/filebeat-1.2.3-x86_64.tar.gz)
+*	Download topbeat-1.2.3-x86_64.tar.gz from [elastic](https://download.elastic.co/beats/filebeat/topbeat-1.2.3-x86_64.tar.gz)
+*	Download metricbeat-5.0.0-alpha5-linux-x86_64.tar.gz from [elastic](https://download.elastic.co/beats/metricbeat/metricbeat-5.0.0-alpha5-linux-x86_64.tar.gz)
 *	Be lazy and get correct versions of all requirements used by this project from my archive [here] (https://goo.gl/h7jpEs) 
 *	Place all the above files at the root of this repo.
 
