@@ -117,6 +117,7 @@ Vagrant.configure("2") do |config|
         utils.build_filebeat_config name
         utils.build_topbeat_config name
         utils.build_metricbeat_config name
+        utils.build_packetbeat_config name
 
         node.vm.hostname = "#{node_name}.es.dev"
         node.vm.network 'private_network', ip: ip, auto_config: true
@@ -163,6 +164,7 @@ Vagrant.configure("2") do |config|
         utils.build_filebeat_config name
         utils.build_topbeat_config name
         utils.build_metricbeat_config name
+        utils.build_packetbeat_config name
 
         node.vm.hostname = "#{node_name}.es.dev"
         node.vm.network 'private_network', ip: ip, auto_config: true

@@ -25,10 +25,12 @@ firewall-cmd --zone=public --add-port=5403/udp --permanent
 systemctl stop firewalld
 systemctl start firewalld
 
+#allows packetbeat to capture as non-root user
+setcap cap_net_raw=ep /home/vagrant/packetbeat/packetbeat
+
 #let vagrant read the log folder - !BUG! needs better solution
 chmod 755 /var/log -R
 chmod 744 /var/log/* 
 chmod 744 /var/log/audit/*
 chmod 744 /var/log/anaconda/*  
-chmod 744 /var/log/ppp/*
 chmod 744 /var/log/tuned/*  

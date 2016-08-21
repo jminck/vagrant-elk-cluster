@@ -31,5 +31,4 @@ chmod 755 /var/log -R
 chmod 744 /var/log/* 
 chmod 744 /var/log/audit/*
 chmod 744 /var/log/anaconda/*  
-chmod 744 /var/log/ppp/*
 chmod 744 /var/log/tuned/*  
