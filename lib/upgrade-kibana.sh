@@ -35,6 +35,9 @@ find /home/vagrant/ > folderlist.txt
 cd /home/vagrant/metricbeat/kibana/
 ./import_dashboards.sh  -url http://10.1.1.11:9200
 
+#install tag cloud visualization, used by twitter dashboard sample
+/home/vagrant/kibana/bin/kibana plugin -i tagcloud -u https://github.com/stormpython/tagcloud/archive/master.zip
+
 firewall-cmd --zone=public --add-port=9200/tcp --permanent
 firewall-cmd --zone=public --add-port=9300/tcp --permanent
 firewall-cmd --zone=public --add-port=5601/tcp --permanent
