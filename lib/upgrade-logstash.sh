@@ -1,4 +1,4 @@
-yum -q -y install screen
+yum -q -y install screen wget
 
 # Install JAVA
 yum -q -y localinstall /vagrant/jdk-8u91-linux-x64.rpm
@@ -20,7 +20,7 @@ else
     tar -zxf /vagrant/$LOGSTASH_VERSION.tar.gz
 fi
 
-# Renaming extracted folder to a generic name to avoid changing commands 
+# Renaming extracted folder to a generic name to avoid changing commands
 mv $LOGSTASH_VERSION logstash
 
 chown -R vagrant: logstash
