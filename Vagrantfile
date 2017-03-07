@@ -211,7 +211,7 @@ Vagrant.configure("2") do |config|
           name = "Winclient"
           winclient_name = name
           ip = "10.1.1.252"
-
+          winclient.vm.synced_folder "./", "/vagrant"
           winclient.vm.hostname = "#{winclient_name}"
           winclient.vm.network 'private_network', ip: ip, auto_config: true
           winclient.vm.network "forwarded_port", guest: 3389, host: 3389

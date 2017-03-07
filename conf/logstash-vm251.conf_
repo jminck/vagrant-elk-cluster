@@ -1,0 +1,61 @@
+input { 
+  twitter {
+       # add your twitter API key info - these keys are bogus
+            consumer_key => "e9vQUQlo4alwI6ZLdPacIoXBm"
+            consumer_secret => "CkZJuBp49FoAp1XsW4kRUj4D83KhU1HIvi3M240xhLvoeZrAlZ"
+            oauth_token => "1115912828-fxO425NYVlBD63POcrPcAkv2GrXqGamtINhpn1F"
+            oauth_token_secret => "ALIVAj1t4OjdLpqSGsda8DJFMcGZeKXeeetQrU0FAKX3r"
+    keywords => ["#Hillary","#Trump","HillaryClinton"]
+    full_tweet => true
+    type => "twitter"
+    }
+  beats {
+    port => 5510
+    type => beats
+    }
+  tcp {
+    port => 5514
+    type => syslog
+  }
+ udp {
+    port => 5514
+    type => syslog
+  }  
+ }
+
+filter {
+  if [type] == "syslog" {
+    grok {
+      match => { "message" => "%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{DATA:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{GREEDYDATA:syslog_message}" }
+      add_field => [ "received_at", "%{@timestamp}" ]
+      add_field => [ "received_from", "%{host}" ]
+    }
+    syslog_pri { }
+    date {
+      match => [ "syslog_timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
+    }
+  }
+}
+
+
+output {
+  if [type] == "twitter" {
+    elasticsearch {
+        hosts => [ "10.1.1.11:9200", "10.1.1.12:9200", "10.1.1.13:9200", "10.1.1.14:9200", "10.1.1.15:9200" ]
+        sniffing => true
+        index => "twitter-%{+YYYY.MM.dd}"
+        document_type => "tweet"
+        template => "/vagrant/conf/twitter_template.json"
+        template_name => "twitter"
+        }
+  } else {
+    elasticsearch {
+        manage_template => false
+        index => "%{[@metadata][beat]}-%{+YYYY.MM.dd}"
+        document_type => "%{[@metadata][type]}"
+        hosts => [ "10.1.1.11:9200", "10.1.1.12:9200", "10.1.1.13:9200", "10.1.1.14:9200", "10.1.1.15:9200" ]
+        sniffing => true
+      }
+  }
+ }
+
