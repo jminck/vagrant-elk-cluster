@@ -207,5 +207,21 @@ Vagrant.configure("2") do |config|
     end
 
 
+    # Windows 2012 R2 client
+      config.vm.define :"winclient" do |winclient|
+          winclient.vm.box = "mwrock/Windows2012R2" 
+          name = "Winclient"
+          winclient_name = name
+          ip = "10.1.1.252"
+
+          winclient.vm.hostname = "#{winclient_name}"
+          winclient.vm.network 'private_network', ip: ip, auto_config: true
+          winclient.vm.network "forwarded_port", guest: 3389, host: 33389
+
+          winclient.vm.provider "virtualbox" do |v|
+              v.name = name
+          end
+      end
+
     utils.logger.info "----------------------------------------------------------"
 end
