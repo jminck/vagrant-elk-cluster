@@ -208,14 +208,15 @@ Vagrant.configure("2") do |config|
 
     # Windows 2012 R2 client
          config.vm.define :"winclient" do |winclient|
-             winclient.vm.box = "mwrock/Windows2012R2" 
+             winclient.vm.box = "mwrock/Windows2012R2"
              name = "Winclient"
              winclient_name = name
              ip = "10.1.1.252"
              winclient.vm.synced_folder "./", "/vagrant"
              winclient.vm.hostname = "#{winclient_name}"
              winclient.vm.network 'private_network', ip: ip, auto_config: true
-             winclient.vm.provision "shell", inline: "powershell -c c:\\vagrant\\lib\\win-client.ps1 | out-file c:\\vagrant\\win-client.log", privileged: true, powershell_elevated_interactive: true 
+             winclient.vm.provision "shell", inline: "c:\\vagrant\\autologon.exe vagrant workgroup vagrant", privileged: true 
+             winclient.vm.provision "shell", inline: "powershell -c c:\\vagrant\\lib\\win-client.ps1 | out-file c:\\vagrant\\win-client.log", privileged: true, powershell_elevated_interactive: true
              winclient.vm.provider "virtualbox" do |v|
                  v.name = name
              end
