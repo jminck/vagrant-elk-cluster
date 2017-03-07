@@ -8,3 +8,4 @@ data/
 sampledata/nyc_collision/*.csv
 nohup.out
 hosts
+*.zip
