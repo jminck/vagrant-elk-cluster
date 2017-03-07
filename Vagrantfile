@@ -215,7 +215,7 @@ Vagrant.configure("2") do |config|
              winclient.vm.synced_folder "./", "/vagrant"
              winclient.vm.hostname = "#{winclient_name}"
              winclient.vm.network 'private_network', ip: ip, auto_config: true
-             winclient.vm.provision "shell", inline: "powershell -c c:\vagrant\lib\win-client.ps1", privileged: true, powershell_elevated_interactive: true
+             winclient.vm.provision "shell", inline: "powershell -c c:\\vagrant\\lib\\win-client.ps1 | out-file c:\\vagrant\\win-client.log", privileged: true, powershell_elevated_interactive: true 
              winclient.vm.provider "virtualbox" do |v|
                  v.name = name
              end
