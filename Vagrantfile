@@ -216,8 +216,10 @@ Vagrant.configure("2") do |config|
              winclient.vm.hostname = "#{winclient_name}"
              winclient.vm.network 'private_network', ip: ip, auto_config: true
              winclient.vm.provision "shell", inline: "reg add HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System /v EnableLUA /t 0 /f", privileged: true
+             winclient.vm.provision :reload
              winclient.vm.provision "shell", inline: "c:\\vagrant\\autologon.exe vagrant workgroup vagrant", privileged: true 
-             winclient.vm.provision "shell", inline: "powershell -c c:\\vagrant\\lib\\win-client.ps1 | out-file c:\\vagrant\\win-client.log", privileged: true, powershell_elevated_interactive: true
+             winclient.vm.provision :reload
+             winclient.vm.provision "shell", inline: "powershell -c c:\\vagrant\\lib\\win-client.ps1 | out-file c:\\vagrant\\win-client.log", privileged: true
              winclient.vm.provider "virtualbox" do |v|
                  v.name = name
              end
