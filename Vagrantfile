@@ -93,7 +93,7 @@ Vagrant.configure("2") do |config|
                 run: 'always'
             node.vm.network "forwarded_port", guest: 9200, host: 9200+index
             node.vm.network "forwarded_port", guest: 9300, host: 9300+index
-            node.vm.provision :reload 
+            node.vm.provision :reload
             node.vm.provider "parallels" do |v|
                 v.name = "elasticsearch-#{name}"
             end
@@ -113,7 +113,7 @@ Vagrant.configure("2") do |config|
         name = utils.get_logstash_vm_name
         node_name = utils.get_logstash_node_name
         ip = utils.get_logstash_vm_ip
-        utils.build_logstash_config 
+        utils.build_logstash_config
         utils.build_filebeat_config name
         utils.build_topbeat_config name
         utils.build_metricbeat_config name
@@ -185,7 +185,7 @@ Vagrant.configure("2") do |config|
             run: 'always'
         node.vm.provision 'shell', path: './lib/upgrade-kibana.sh'
         node.vm.provision 'shell', inline: @kibana_start_inline_script % [name, node_name, ip],
-            run: 'always'        
+            run: 'always'
         #This is to workaround unreliable static IP addignment due to BOOTPROTO=none instead of static set by Vagrant
         node.vm.provision 'shell', inline: "sudo sed -i 's/BOOTPROTO=none/BOOTPROTO=static/g' /etc/sysconfig/network-scripts/ifcfg-*",
             run: 'always'
@@ -206,18 +206,16 @@ Vagrant.configure("2") do |config|
         end
     end
 
-
     # Windows 2012 R2 client
-      config.vm.define :"winclient" do |winclient|
-          winclient.vm.box = "mwrock/Windows2012R2" 
+      config.vm.define :"Win2012R2" do |winclient|
           name = "Winclient"
           winclient_name = name
           ip = "10.1.1.252"
 
           winclient.vm.hostname = "#{winclient_name}"
           winclient.vm.network 'private_network', ip: ip, auto_config: true
-          winclient.vm.network "forwarded_port", guest: 3389, host: 33389
-
+          winclient.vm.network "forwarded_port", guest: 3389, host: 3389
+          winclient.vm.provision "shell", path: "lib/win-client.ps1", privileged: true
           winclient.vm.provider "virtualbox" do |v|
               v.name = name
           end
