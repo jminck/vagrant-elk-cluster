@@ -207,7 +207,7 @@ Vagrant.configure("2") do |config|
     end
 
     # Windows 2012 R2 client
-         config.vm.define :"Win2012R2" do |winclient|
+         config.vm.define :"winclient" do |winclient|
              winclient.vm.box = "mwrock/Windows2012R2" 
              name = "Winclient"
              winclient_name = name
@@ -215,7 +215,6 @@ Vagrant.configure("2") do |config|
              winclient.vm.synced_folder "./", "/vagrant"
              winclient.vm.hostname = "#{winclient_name}"
              winclient.vm.network 'private_network', ip: ip, auto_config: true
-             winclient.vm.network "forwarded_port", guest: 3389, host: 3389
              winclient.vm.provision "shell", path: "lib/win-client.ps1", privileged: true, powershell_elevated_interactive: true
              winclient.vm.provider "virtualbox" do |v|
                  v.name = name
